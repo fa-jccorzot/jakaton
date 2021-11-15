@@ -12,6 +12,8 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
+      - name: Config
+        run: npm install -g firebase-tools
       - name: Checkout Repo
         uses: actions/checkout@master
       - name: Install Dependencies
@@ -19,8 +21,4 @@ jobs:
       - name: Build
         run: npm run build
       - name: Deploy to Firebase
-        uses: w9jds/firebase-action@master
-        with:
-          args: deploy
-        env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_FLOWING_BONITO_331815 }}
+        run: firebase deploy --token ${{ secrets.FIREBASE_TOKEN }}}
