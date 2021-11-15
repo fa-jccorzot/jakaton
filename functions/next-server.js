@@ -3,7 +3,7 @@ const { default: next } = require('next');
 const nextConfig = require('../src/next.config.js');
 
 const nextjsServer = next({
-  dev: false,
+  dev: true,
   conf: {
     ...nextConfig,
     distDir: '.next'

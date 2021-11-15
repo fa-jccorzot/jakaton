@@ -1,7 +1,0 @@
-11:26:09.640 [NamespaceSystem-akka.actor.default-dispatcher-5] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started
-11:26:09.856 [main] INFO com.firebase.server.forge.App$ - Listening at localhost:9000
-11:27:14.356 [Thread-1] INFO com.firebase.server.forge.App$ - Attempting graceful shutdown.
-11:27:14.369 [NamespaceSystem-akka.actor.default-dispatcher-8] INFO com.firebase.core.namespace.Terminator$Terminator - 1 actors left to terminate: flowing-bonito-331815-default-rtdb
-11:27:14.383 [NamespaceSystem-akka.actor.default-dispatcher-8] INFO com.firebase.core.namespace.NamespaceActor - Stopping namespace actor for flowing-bonito-331815-default-rtdb
-11:27:14.384 [NamespaceSystem-akka.actor.default-dispatcher-8] INFO com.firebase.core.namespace.NamespaceActor - Gauges removed for flowing-bonito-331815-default-rtdb
-11:27:14.393 [Thread-1] INFO com.firebase.server.forge.App$ - Graceful shutdown complete.
