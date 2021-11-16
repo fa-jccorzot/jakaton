@@ -1,18 +1,14 @@
-import Image from 'next/image';
-import headerImg from '../../public/images/icon.svg';
-import searchButtonImg from '../../public/images/search-button.svg';
-import cartImg from '../../public/images/cart.svg';
 import styles from '../styles/components/header.module.css';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 
 export default function Header() {
   const [contracted, setContracted] = useState(true);
-  const handleMenu = useCallback(() => setContracted(!contracted));
+  const handleMenu = () => setContracted(!contracted);
 
   return (
     <header className={styles.header}>
       <div className={styles.iconContainer}>
-        <Image src={headerImg} className={styles.icon} />
+        <img src={'./images/icon.svg'} className={styles.icon} alt={'Icon'} />
       </div>
       <div className={styles.menuContainer} onClick={handleMenu}>
         <span className={contracted ? styles.menuContracted : styles.menuExpanded}></span>
@@ -20,7 +16,7 @@ export default function Header() {
       </div>
       <div className={styles.searchBarContainer}>
         <input className={styles.search} placeholder={'Buscar en falabella.com'} />
-        <Image src={searchButtonImg} className={styles.searchIcon} />
+        <img src={'./images/search-button.svg'} className={styles.searchIcon} alt={'Search'} />
       </div>
       <div className={styles.signInContainer}>
         <p className={styles.greeting}>Hola,</p>
@@ -30,7 +26,7 @@ export default function Header() {
         <p>Mis compras</p>
       </div>
       <div className={styles.shoppingCarContainer}>
-        <Image src={cartImg} />
+        <img src={'./images/cart.svg'} alt={'Cart'} />
       </div>
     </header>
   );
