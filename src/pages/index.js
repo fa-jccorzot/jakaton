@@ -1,4 +1,4 @@
-import styles from '../styles/Home.module.css';
+import styles from '../styles/home.module.css';
 import Header from '../components/header';
 import Head from '../components/head';
 import Footer from '../components/footer';
@@ -6,6 +6,7 @@ import Footer from '../components/footer';
 import CustomLink from '../components/link';
 import Left from '../components/arrows/left';
 import Right from '../components/arrows/right';
+import { useRef, useState, useEffect } from 'react';
 
 const brands = [
   {
@@ -34,6 +35,86 @@ const brands = [
   }
 ];
 
+const products = [
+  {
+    img: '',
+    brand: 'Barone LLC.',
+    name: 'Set de sombras ',
+    price: '$739.65',
+    id: '1'
+  },
+  {
+    img: '',
+    brand: 'Barone LLC.',
+    name: 'Set de sombras ',
+    price: '$739.65',
+    id: '2'
+  },
+  {
+    img: '',
+    brand: 'Barone LLC.',
+    name: 'Set de sombras ',
+    price: '$739.65',
+    id: '3'
+  },
+  {
+    img: '',
+    brand: 'Barone LLC.',
+    name: 'Set de sombras ',
+    price: '$739.65',
+    id: '4'
+  },
+  {
+    img: '',
+    brand: 'Barone LLC.',
+    name: 'Set de sombras ',
+    price: '$739.65',
+    id: '5'
+  },
+  {
+    img: '',
+    brand: 'Barone LLC.',
+    name: 'Set de sombras ',
+    price: '$739.65',
+    id: '6'
+  },
+  {
+    img: '',
+    brand: 'Barone LLC.',
+    name: 'Set de sombras ',
+    price: '$739.65',
+    id: '7'
+  },
+  {
+    img: '',
+    brand: 'Barone LLC.',
+    name: 'Set de sombras ',
+    price: '$739.65',
+    id: '8'
+  },
+  {
+    img: '',
+    brand: 'Barone LLC.',
+    name: 'Set de sombras ',
+    price: '$739.65',
+    id: '9'
+  },
+  {
+    img: '',
+    brand: 'Barone LLC.',
+    name: 'Set de sombras ',
+    price: '$739.65',
+    id: '10'
+  },
+  {
+    img: '',
+    brand: 'Barone LLC.',
+    name: 'Set de sombras ',
+    price: '$739.65',
+    id: '11'
+  }
+];
+
 export default function Home() {
   return (
     <>
@@ -44,7 +125,20 @@ export default function Home() {
           <img className={styles.bannerImg} src={'./images/banner.png'} alt={'banner'} />
         </section>
 
-        <Section title={'Lo último que buscaste'}></Section>
+        <Section title={'Lo último que buscaste'}>
+          <ProductsContainer>
+            {products.map(product => (
+              <ProductCard
+                key={product.id}
+                brand={product.brand}
+                id={product.id}
+                img={product.img}
+                name={product.name}
+                price={product.price}
+              />
+            ))}
+          </ProductsContainer>
+        </Section>
 
         <Section title={'Tus marcas favoritas'}>
           <div className={styles.brandsContainer}>
@@ -55,7 +149,9 @@ export default function Home() {
             ))}
           </div>
         </Section>
-        <Section title={'Inspirado en tus favoritos'}></Section>
+        <Section title={'Inspirado en tus favoritos'}>
+          <ProductsContainer></ProductsContainer>
+        </Section>
       </main>
       <Footer />
     </>
@@ -71,24 +167,64 @@ function Section({ title, children }) {
   );
 }
 
-function ProductCard({ brand, name, price, img }) {
+function ProductCard({ brand, name, price, img, id }) {
   return (
-    <div className={styles.productContainer}>
+    <div className={styles.productCard}>
       <div src={img} className={styles.productImage} />
       <p className={styles.productBrand}>{brand}</p>
       <p className={styles.productName}>{name}</p>
       <p className={styles.productPrice}>{price}</p>
-      <CustomLink className={styles.productButton}>Ver Producto</CustomLink>
+      <CustomLink href={`/${id}`} className={styles.productButton}>
+        Ver Producto
+      </CustomLink>
     </div>
   );
 }
 
 function ProductsContainer({ children }) {
+  const [left, setLeft] = useState(true);
+  const [right, setRight] = useState(false);
+  const [position, setPosition] = useState(0);
+  const ref = useRef();
+
+  const length = useRef(children?.length || 0);
+  const width = useRef(length.current * 192);
+  const widthToChange = useRef(width.current / length.current);
+
+  const changeCardClick = index => {
+    setPosition(position + index * -widthToChange.current);
+  };
+
+  useEffect(() => {
+    if (length.current <= 5) {
+      setRight(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (position === 0) {
+      setLeft(true);
+    } else if (position === -widthToChange.current * (length.current - 5)) {
+      setRight(true);
+    } else {
+      setLeft(false);
+      setRight(false);
+    }
+  }, [position]);
+
   return (
-    <div>
-      <Left />
-      {children}
-      <Right />
+    <div className={styles.productsContainer}>
+      <Left onClick={() => changeCardClick(-1)} disabled={left} />
+      <div style={{ overflowX: 'hidden' }}>
+        <div
+          ref={ref}
+          className={styles.productsRow}
+          style={{ width: width.current, transform: `translateX(${position}px)` }}
+        >
+          {children}
+        </div>
+      </div>
+      <Right onClick={() => changeCardClick(1)} style={{ justifySelf: 'end' }} disabled={right} />
     </div>
   );
 }

@@ -39,12 +39,78 @@
   margin: 16px;
 }
 
-.productContainer {
+.productsContainer {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 10% 80% 10%;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+  padding: 0 5%;
+  overflow-x: hidden;
+}
+
+.productCard {
   display: flex;
   flex-direction: column;
+  width: 160px;
+  height: 333px;
+  margin: auto 16px;
 }
 
 .productImage {
-  width: 150px;
-  height: 160px;
+  width: 160px;
+  height: 150px;
+  background-color: #323c47;
+}
+
+.productBrand {
+  font-family: var(--font);
+  font-weight: 700;
+  font-size: 12px;
+  color: #4a4a4a;
+  margin-top: 32px;
+  margin-bottom: 8px;
+}
+
+.productName {
+  font-family: var(--font);
+  font-weight: 400;
+  font-size: 14px;
+  color: #4a4a4a;
+  margin-bottom: 32px;
+}
+
+.productPrice {
+  font-family: var(--font);
+  font-weight: 400;
+  font-size: 14px;
+  color: #e4022d;
+  margin-bottom: 32px;
+}
+
+.productButton {
+  font-family: var(--font);
+  outline: none;
+  color: white;
+  background-color: #323c47;
+  width: 118px;
+  height: 32px;
+  font-weight: 400;
+  font-size: 12px;
+  border-radius: 16px;
+  stroke: none;
+  text-decoration: none;
+  padding: 9px 24px;
+}
+
+.productButton:hover {
+  cursor: pointer;
+  opacity: 0.5;
+}
+
+.productsRow {
+  display: flex;
+  height: 333px;
+  overflow-x: hidden;
 }
