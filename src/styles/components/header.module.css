@@ -1,0 +1,163 @@
+.header {
+  width: 1440px;
+  height: 70px;
+  background-color: #ee5601;
+  flex-direction: row;
+  display: flex;
+}
+
+.iconContainer {
+  width: 243px;
+  height: 70px;
+  background: linear-gradient(90.96deg, #ff6200 0%, #ff861b 95.09%);
+  border-radius: 0 35px 35px 0;
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.icon {
+  height: 33px;
+  width: 187px;
+}
+
+.menuContainer {
+  width: 110px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  margin: auto;
+}
+
+.menuContracted {
+  margin: auto;
+  position: relative;
+  height: 3px;
+  width: 22px;
+  background-color: white;
+  transition: all 0.5s;
+  display: inline-block;
+}
+
+.menuContracted::before {
+  content: '';
+  position: absolute;
+  height: 3px;
+  width: 22px;
+  background-color: white;
+  transition: all 0.5s;
+  bottom: 9px;
+}
+
+.menuContracted::after {
+  content: '';
+  position: absolute;
+  height: 3px;
+  width: 22px;
+  background-color: white;
+  transition: all 0.5s;
+  bottom: -9px;
+}
+
+.menuExpanded {
+  margin: auto;
+  position: relative;
+  height: 3px;
+  width: 22px;
+  background-color: white;
+  transition: all 0.5s;
+  bottom: unset;
+  transform: rotate(135deg);
+  display: inline-block;
+}
+
+.menuExpanded::before {
+  content: '';
+  position: absolute;
+  height: 3px;
+  width: 22px;
+  background-color: white;
+  transition: all 0.5s;
+  bottom: 0px;
+  transform: rotate(0deg);
+}
+
+.menuExpanded::after {
+  content: '';
+  position: absolute;
+  height: 3px;
+  width: 22px;
+  background-color: white;
+  transition: all 0.5s;
+  bottom: 0px;
+  transform: rotate(-90deg);
+}
+
+.menuText {
+  font-family: var(--font);
+  font-weight: 700;
+  font-size: 22px;
+  color: white;
+}
+
+.searchBarContainer {
+  background-color: white;
+  width: 678px;
+  height: 46px;
+  border-radius: 23px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  padding-left: 24px;
+  position: relative;
+}
+
+.searchIcon {
+  height: 46px;
+  width: 46px;
+}
+
+.search {
+  height: 46px;
+  border: none;
+  width: 632px;
+  margin-left: 10px;
+  background-color: transparent;
+  font-size: 18px;
+  font-family: var(--font);
+  color: #333;
+  outline: none;
+}
+
+.signInContainer {
+  margin: auto;
+  line-height: 16px;
+  font-weight: 900;
+  color: #fff;
+  font-size: 19px;
+}
+
+.greeting {
+  font-weight: 700;
+}
+
+.signInText {
+  margin-top: 5px;
+}
+
+.purchasesContainer {
+  margin: auto 0px;
+  line-height: 16px;
+  font-weight: 700;
+  color: #fff;
+  font-size: 19px;
+  border-right: white 1px solid;
+  border-left: white 1px solid;
+  height: 47px;
+  padding: 7px 10px;
+  width: 105px;
+}
+
+.shoppingCarContainer {
+  margin: auto;
+}
