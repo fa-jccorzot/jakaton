@@ -9,7 +9,7 @@ const detectPredictionsUpdate = functions.storage.object().onFinalize(async obje
   if (object.name === PREDICTIONS_FILE_NAME) {
     const pubSubClient = new PubSub();
 
-    const dataBuffer = Buffer.from({ deploy: true });
+    const dataBuffer = Buffer.from(JSON.stringify({ deploy: true }));
 
     try {
       const messageId = await pubSubClient.topic(TOPIC_NAME).publish(dataBuffer);
