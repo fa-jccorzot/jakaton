@@ -125,7 +125,7 @@ export default function Home() {
           <img className={styles.bannerImg} src={'./images/banner.png'} alt={'banner'} />
         </section>
 
-        <Section title={'Lo último que buscaste'}>
+        <Section title={'Lo que tenemos recomendado para ti'}>
           <ProductsContainer>
             {products.map(product => (
               <ProductCard
@@ -149,7 +149,7 @@ export default function Home() {
             ))}
           </div>
         </Section>
-        <Section title={'Inspirado en tus favoritos'}>
+        <Section title={'Inspirado en tus marcas favoritas'}>
           <ProductsContainer>
             {products.map(product => (
               <ProductCard
