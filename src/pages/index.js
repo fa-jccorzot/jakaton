@@ -150,7 +150,18 @@ export default function Home() {
           </div>
         </Section>
         <Section title={'Inspirado en tus favoritos'}>
-          <ProductsContainer></ProductsContainer>
+          <ProductsContainer>
+            {products.map(product => (
+              <ProductCard
+                key={product.id}
+                brand={product.brand}
+                id={product.id}
+                img={product.img}
+                name={product.name}
+                price={product.price}
+              />
+            ))}
+          </ProductsContainer>
         </Section>
       </main>
       <Footer />
