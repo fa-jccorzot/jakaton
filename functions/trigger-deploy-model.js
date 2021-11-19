@@ -2,11 +2,17 @@ const functions = require('firebase-functions');
 const { PubSub } = require('@google-cloud/pubsub');
 
 const TOPIC_NAME = 'update-predictions';
-const PREDICTIONS_FILE_NAME = 'predictionsv1';
+const PRODUCTS_PREDICTIONS_FILE_NAME = 'predictionsv1';
+const CATEGORIES_PREDICITIONS_FILE_NAME = 'categoriesv1';
+
+const wasSomePredictionFileUpdated = objectName => {
+  return [PRODUCTS_PREDICTIONS_FILE_NAME, CATEGORIES_PREDICITIONS_FILE_NAME].some(value => value === objectName);
+};
 
 const detectPredictionsUpdate = functions.storage.object().onFinalize(async object => {
   console.log('Bucket updated');
-  if (object.name === PREDICTIONS_FILE_NAME) {
+  console.logg('FILE: ', object.name);
+  if (wasSomePredictionFileUpdated(object.name)) {
     const pubSubClient = new PubSub();
 
     const dataBuffer = Buffer.from(JSON.stringify({ deploy: true }));
