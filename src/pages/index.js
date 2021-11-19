@@ -115,7 +115,62 @@ const products = [
   }
 ];
 
-export default function Home() {
+// BA9567962ABE41EDBC7A7FF9476C80FB
+
+async function getProductsRecomendationsByUser(userId) {
+  const response = await fetch(`https://model-tbjsueupcq-uc.a.run.app/predictions/items/${userId}`);
+  const data = await response.json();
+  return data;
+}
+
+async function getCategoriesRecomendationsByUser(userId) {
+  const response = await fetch(`https://model-tbjsueupcq-uc.a.run.app/predictions/categories/${userId}`);
+  const data = await response.json();
+  return data;
+}
+
+async function getBrandsRecomendationsByUser(userId) {
+  const response = await fetch(`https://model-tbjsueupcq-uc.a.run.app/predictions/brands/${userId}`);
+  const data = await response.json();
+  return data;
+}
+
+async function findProducts(product) {
+  // https://www.tottus.cl/api/product-search?q=arroz&perPage=1
+  /* const response = await fetch(`https://www.tottus.cl/api/product-search?q=arroz&perPage=1`, {});
+  console.log(response);
+  const data = await response.json(); */
+  var myHeaders = new Headers();
+  myHeaders.append(
+    'Cookie',
+    '__cf_bm=S7Bvb6aUQwmzK_R2Y1wyXmroWdBfaco.pz4ybcoWm8k-1637293520-0-AUwykKepl84ApS+TsuMs8rDm+NPAvhK/i2bN3xTtUbkMPi4wbgFhRVs/ePu4p02LI7e51kXCQVO1dJHEM8pJR80U/wCZ5Sb1Ik8bjY00sJiz'
+  );
+
+  var requestOptions = {
+    method: 'GET',
+    headers: myHeaders,
+    redirect: 'follow'
+  };
+
+  const response = await fetch(`https://www.tottus.cl/api/product-search?q=${product}&perPage=1`, requestOptions);
+  const data = await response.json();
+
+  return data;
+}
+
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+export default function Home({ products }) {
+  const [recomendedProducts, setRecomendedProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [brands, setBrands] = useState([]);
+
+  useEffect(() => {
+    console.log('PRODUCTS: ', products);
+  }, []);
+
   return (
     <>
       <Head title={'Surprise Me'} />
@@ -130,11 +185,11 @@ export default function Home() {
             {products.map(product => (
               <ProductCard
                 key={product.id}
-                brand={product.brand}
+                brand={product.attributes.marca}
                 id={product.id}
-                img={product.img}
+                img={product.images[0]}
                 name={product.name}
-                price={product.price}
+                price={product.prices.currentPrice}
               />
             ))}
           </ProductsContainer>
@@ -154,11 +209,11 @@ export default function Home() {
             {products.map(product => (
               <ProductCard
                 key={product.id}
-                brand={product.brand}
+                brand={product.attributes.marca}
                 id={product.id}
-                img={product.img}
+                img={product.images[0]}
                 name={product.name}
-                price={product.price}
+                price={product.prices.currentPrice}
               />
             ))}
           </ProductsContainer>
@@ -181,10 +236,10 @@ function Section({ title, children }) {
 function ProductCard({ brand, name, price, img, id }) {
   return (
     <div className={styles.productCard}>
-      <div src={img} className={styles.productImage} />
-      <p className={styles.productBrand}>{brand}</p>
+      <img src={img} className={styles.productImage} alt={name} />
+      <p className={styles.productBrand}>{capitalizeFirstLetter(brand ?? '')}</p>
       <p className={styles.productName}>{name}</p>
-      <p className={styles.productPrice}>{price}</p>
+      <p className={styles.productPrice}>{`$ ${price}`}</p>
       <CustomLink href={`/${id}`} className={styles.productButton}>
         Ver Producto
       </CustomLink>
@@ -238,4 +293,20 @@ function ProductsContainer({ children }) {
       <Right onClick={() => changeCardClick(1)} style={{ justifySelf: 'end' }} disabled={right} />
     </div>
   );
+}
+
+export async function getServerSideProps(context) {
+  const recomendedProducts = await getProductsRecomendationsByUser('BA9567962ABE41EDBC7A7FF9476C80FB');
+  const products = await Promise.all(
+    Object.values(recomendedProducts.item_name).map(async producName => {
+      const p = await findProducts(producName);
+      return { ...p, searched: producName };
+    })
+  );
+  const results = products
+    .filter(product => product.count)
+    .map(product => ({ ...product.results[0], searched: product.searched }));
+  return {
+    props: { products: results } // will be passed to the page component as props
+  };
 }

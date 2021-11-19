@@ -4,9 +4,12 @@ const { PubSub } = require('@google-cloud/pubsub');
 const TOPIC_NAME = 'update-predictions';
 const PRODUCTS_PREDICTIONS_FILE_NAME = 'predictionsv1';
 const CATEGORIES_PREDICITIONS_FILE_NAME = 'categoriesv1';
+const BRANDS_PREDICTIONS_FILE_NAME = 'brandsv1';
 
 const wasSomePredictionFileUpdated = objectName => {
-  return [PRODUCTS_PREDICTIONS_FILE_NAME, CATEGORIES_PREDICITIONS_FILE_NAME].some(value => value === objectName);
+  return [PRODUCTS_PREDICTIONS_FILE_NAME, CATEGORIES_PREDICITIONS_FILE_NAME, BRANDS_PREDICTIONS_FILE_NAME].some(
+    value => value === objectName
+  );
 };
 
 const detectPredictionsUpdate = functions.storage.object().onFinalize(async object => {
