@@ -69,15 +69,15 @@ export default function Home({ products, brands, categories }) {
 
         <Section title={'Marcas sugeridas'}>
           <div className={styles.brandsContainer}>
-            {brands.map(brand => (
-              <Chip name={capitalizeFirstLetter(brand)} />
+            {brands.map((brand, index) => (
+              <Chip key={index} name={capitalizeFirstLetter(brand)} />
             ))}
           </div>
         </Section>
         <Section title={'Categorías sugeridas'}>
           <div className={styles.brandsContainer}>
-            {categories.map(brand => (
-              <Chip name={capitalizeFirstLetter(brand?.toLowerCase())} />
+            {categories.map((brand, index) => (
+              <Chip key={index} name={capitalizeFirstLetter(brand?.toLowerCase())} />
             ))}
           </div>
         </Section>
@@ -134,6 +134,7 @@ function ProductsContainer({ children }) {
     if (position === 0) {
       setLeft(true);
     } else if (position === -widthToChange.current * (length.current - 5)) {
+      setLeft(false);
       setRight(true);
     } else {
       setLeft(false);
