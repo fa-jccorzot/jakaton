@@ -11,7 +11,7 @@ const wasSomePredictionFileUpdated = objectName => {
 
 const detectPredictionsUpdate = functions.storage.object().onFinalize(async object => {
   console.log('Bucket updated');
-  console.logg('FILE: ', object.name);
+  console.log('FILE: ', object.name);
   if (wasSomePredictionFileUpdated(object.name)) {
     const pubSubClient = new PubSub();
 
