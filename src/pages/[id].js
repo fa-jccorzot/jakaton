@@ -167,11 +167,12 @@ function Chip({ name }) {
 }
 
 export async function getServerSideProps(context) {
+  const userId = context.params.id;
   try {
     const [recomendedProducts, categoriesRespone, brandsResponse] = await Promise.all([
-      getProductsRecomendationsByUser('BA9567962ABE41EDBC7A7FF9476C80FB'),
-      getCategoriesRecomendationsByUser('BA9567962ABE41EDBC7A7FF9476C80FB'),
-      getBrandsRecomendationsByUser('BA9567962ABE41EDBC7A7FF9476C80FB')
+      getProductsRecomendationsByUser(userId),
+      getCategoriesRecomendationsByUser(userId),
+      getBrandsRecomendationsByUser(userId)
     ]);
 
     const products = await Promise.all(
